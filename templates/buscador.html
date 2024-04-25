@@ -3,9 +3,11 @@
 {% block subtitulo %}Buscador{% endblock %}
 {% block encabezado %}Introduce algo en el buscador{% endblock %}
 {% block contenido %}
-<form action="/listado" method="POST">
-    <h2>Jugadores:</h2>
-    <p><input type="text" name="cadena" placeholder="Buscar un jugador..." /></p>
-    <button type="submit">Buscar</button>
-</form>    
+<div class="centrado">
+    <form action="/listado" method="POST">
+        <h2>Jugadores:</h2>
+        <p><input type="text" name="cadena" placeholder="Buscar un jugador..." /></p>
+        <button type="submit">Buscar</button>
+    </form>
+</div>        
 {% endblock %}

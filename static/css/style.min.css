@@ -221,6 +221,12 @@
     font-size: inherit;
     line-height: inherit;
   }
+  .table {
+    width: 100%; 
+    margin: 0 auto; 
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
   button,
   input {
     overflow: visible;
@@ -8923,8 +8929,4 @@
     display: flex;
     justify-content: center;
   }
-  .table {
-    font-size: 1em; 
-    max-width: 200%; 
-    margin: 0 auto; 
-  }
+

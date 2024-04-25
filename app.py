@@ -34,9 +34,16 @@ def listado():
 
 @app.route('/jugador/<int:id>')
 def jugador(id):
-    for jugador in jugadores['players']:
-        if jugador['tid'] == id:
+    ruta_archivo = 'static/js/nba.json'
+    with open(ruta_archivo, 'r') as archivo:
+        datos_json = json.load(archivo)
+
+    jugadores = datos_json.get("players", [])
+    
+    for jugador in jugadores:
+        if jugador.get('tid') == id:
             return render_template('jugador.html', jugador=jugador)
+    
     return "Jugador no encontrado"
 
 if __name__ == "__main__":
