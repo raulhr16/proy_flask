@@ -1,13 +1,55 @@
+<!-- buscador.html -->
 {% extends "base.html" %}
-{% block tittle %}NBASTAR - Buscador{%endblock%}
+{% block title %}NBASTAR - Buscador{% endblock %}
 {% block subtitulo %}Buscador{% endblock %}
 {% block encabezado %}Introduce algo en el buscador{% endblock %}
 {% block contenido %}
 <div class="centrado">
-    <form action="/listado" method="POST">
+    <form action="/buscador" method="POST">
         <h2>Jugadores:</h2>
-        <p><input type="text" name="cadena" placeholder="Buscar un jugador..." /></p>
+        <p><input type="text" name="nombre" placeholder="Buscar un jugador..." value="{{ request.form.nombre if request.form.nombre }}" /></p>
+        <p>
+            <select name="posicion">
+                <option value="">Selecciona una posición</option>
+                {% for posicion in posiciones %}
+                    {% if request.form.posicion == posicion %}
+                        <option value="{{ posicion }}" selected>{{ posicion }}</option>
+                    {% else %}
+                        <option value="{{ posicion }}">{{ posicion }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </p>
         <button type="submit">Buscar</button>
     </form>
-</div>        
+    {% if resultados %}
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Posición</th>
+                    <th scope="col">Nacimiento</th>
+                    <th scope="col">Enlace</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for jugador in resultados %}
+                    <tr>
+                        <td>{{ jugador['name'] }}</td>
+                        <td>{{ jugador['pos'] }}</td>
+                        <td>
+                            <p><strong>Año de nacimiento: </strong>{{ jugador['born']['year'] }}</p>
+                            <p><strong>Localidad:</strong> {{ jugador['born']['loc'] }}</p>
+                        </td>
+                        <td><a href="{{ url_for('jugador', nombre=jugador['name']) }}" class="btn btn-primary btn-sm">Detalle</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        {% if request.method == 'POST' %}
+            <p>No se encontraron jugadores con esa combinación de nombre y posición.</p>
+        {% endif %}
+    {% endif %}
+</div>
 {% endblock %}

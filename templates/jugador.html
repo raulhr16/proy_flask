@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Detalle del Jugador{% endblock %}
+{% block subtitulo %}Detalle del Jugador{% endblock %}
+{% block encabezado %}Detalles del Jugador{% endblock %}
+{% block contenido %}
+    <div class="container">
+        <h2>{{ jugador['name'] }}</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Posición:</strong> {{ jugador['pos'] }}</p>
+                <p><strong>Año de Nacimiento:</strong> {{ jugador['born']['year'] }}</p>
+                <p><strong>Localidad:</strong> {{ jugador['born']['loc'] }}</p>
+                <p><strong>Altura:</strong> {{ jugador['hgt'] }} cm</p>
+                <p><strong>Peso:</strong> {{ jugador['weight'] }} kg</p>
+                <p><strong>Universidad:</strong> {{ jugador['college'] }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Contrato:</strong> ${{ jugador['contract']['amount'] }} hasta {{ jugador['contract']['exp'] }}</p>
+                <p><strong>Transacciones:</strong></p>
+                <ul>
+                    {% for transaction in jugador['transactions'] %}
+                        <li>{{ transaction['season'] }} - {{ transaction['type'] }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Draft:</strong> Ronda {{ jugador['draft']['round'] }}, Selección {{ jugador['draft']['pick'] }} en el año {{ jugador['draft']['year'] }}</p>
+                <p><strong>Premios:</strong></p>
+                <ul>
+                    {% for award in jugador['awards'] %}
+                        <li>{{ award['season'] }} - {{ award['type'] }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Estadísticas</h3>
+                {% if jugador['stats'] %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Año</th>
+                                <th>Partidos</th>
+                                <th>Puntos</th>
+                                <th>Asistencias</th>
+                                <th>Media Rebotes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stat in jugador['stats'] %}
+                                <tr>
+                                    <td>{{ stat['season'] }}</td>
+                                    <td>{{ stat['gp'] }}</td>
+                                    <td>{{ stat['pts'] }}</td>
+                                    <td>{{ stat['ast'] }}</td>
+                                    <td>{{ stat['trbp'] }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay estadísticas disponibles para este jugador.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
